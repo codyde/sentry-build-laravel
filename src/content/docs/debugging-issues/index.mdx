@@ -1,0 +1,48 @@
+---
+title: "Introduction"
+description: "Introduction to Laravel and React with Sentry"
+---
+
+So we've got Sentry installed now; great. Let's get to exploring what's going on with Unborked.
+
+## Houston, We Have Several Problems
+
+Picture this: You visit Unborked's marketplace, eager to pick up some sweet swag, and you're waiting... and waiting... and waiting.
+
+Something's clearly wrong but you can't quite put your fingers on what. Fortunately, we've got monitoring for that! 
+
+## Sentry's Laravel Framework View 
+
+Did you know Sentry built a framework view for Laravel? If you head into Insights > Backend, select your project, you'll see it! This view is great for giving you a view into errors and performance that matches up with what you would expect from 
+Laravel
+
+![Laravel Framework View](/../../assets/img/SentryLaravelView.png)
+
+This framework view gives you performance insights into 
+
+- Requests and Error Rates 
+- Current Issues 
+- Connection Duration 
+- Jobs 
+- Slow database queries 
+- Cache misses 
+- And per route performance
+
+If we dive into our route, we can quickly tell that performance is decidedly **not good**.
+
+![Laravel Route Performance](/../../assets/img/LaravelRoutePerformance.png)
+
+In this view, we can quickly see that the total load time for our main site in most case exceeds 1.5 seconds; which is pretty atrocious for a site that should be loading up quickly to allow purchases.
+
+## Trace View - Part 1 
+
+If we dive into any of the transactions, we can see a detailed view of the overall trace, and the spans below it that cover the load time for our application. 
+
+![Laravel Trace View](/../../assets/img/LaravelExampleTraceView.png)
+
+A couple of insights we can immediately notice:
+- These traces are 80% slower than the average
+- The majority of time is coming from a /render call thats being made 
+- Our database queries are fast in comparison; so its a different aspect of loading thats slowing us down 
+
+We can instrument custom traces to help us identify where the performance is going down.

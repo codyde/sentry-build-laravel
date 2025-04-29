@@ -1,0 +1,93 @@
+---
+title: Quickstart Guide
+description: Get up and running with the workshop in minutes
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+Follow this guide to get up and running with the workshop environment in the fastest way possible.
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- [Git](https://git-scm.com/downloads)
+- [Node.js](https://nodejs.org/) (includes npm)
+- [PHP and the Laravel Installer](https://laravel.com/docs/12.x/installation#installing-php)
+
+You can install the necessary PHP and Laravel components on MacOS with the following command
+
+```bash
+/bin/bash -c "$(curl -fsSL https://php.new/install/mac/8.4)"
+```
+
+Additionally, you'll need a Sentry account to follow along with the error monitoring portions of this workshop:
+- [Sign up for a free Sentry.io](https://sentry.io/signup/) if you don't already have an account
+
+## Setup Instructions
+
+<Steps>
+  1. **Clone the repository**
+
+     ```bash
+     git clone https://github.com/nikolovlazar/errorfix-laravel
+     ```
+
+  2. **Navigate to the project directory**
+
+     ```bash
+     cd errorfix-laravel
+     ```
+
+  3. **Install PHP dependencies**
+
+     ```bash
+     composer install
+     ```
+
+  4. **Install Node dependencies**
+
+     ```bash
+     npm install
+     ```
+
+  5. **Set up environment**
+
+     ```bash
+     cp .env.example .env
+     php artisan key:generate
+     ```
+
+  6. **Prepare the database**
+
+     ```bash
+     touch database/database.sqlite
+     php artisan migrate:fresh
+     php artisan db:seed
+     ```
+
+  7. **Build frontend assets**
+
+     ```bash
+     npm run build
+     ```
+
+  8. **Start the development server (SSR mode)**
+
+     ```bash
+     composer dev:ssr
+     ```
+</Steps>
+
+## What's Available After Setup
+
+Once you've completed the setup, you'll have access to:
+
+- Unborked - A React frontend with Laravel/PHP backend
+- Local development environment running at [http://localhost:8000](http://localhost:8000)
+- A seeded database that has all the items from the store
+
+This setup will allow you to progress in the workshop and start digging into the issues in the application.
+
+## Next Steps
+
+Once your environment is running, head to the [Code Breaks](/code-breaks/) module to start learning how to identify and fix errors using Sentry.

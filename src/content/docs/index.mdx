@@ -1,0 +1,38 @@
+---
+title: Welcome to Sentry Build
+description: Code Breaks, learn how to fix it faster with Sentry
+template: splash
+hero:
+  tagline: A hands-on workshop to master error monitoring, replays, performance tracking, and AI-powered fixes with Sentry
+  image:
+    file: /src/assets/sentry-glyph-light-400x367.png
+  actions:
+    - text: Get Started
+      link: /quickstart/
+      icon: right-arrow
+    - text: Sentry.io
+      link: https://sentry.io
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Workshop Modules
+
+<CardGrid stagger>
+	<Card title="Code Breaks... So What Now" icon="error">
+		Welcome to Unborked, a React and Laravel application that is... very borked.
+	</Card>
+	<Card title="Install Sentry!" icon="backstage">
+		Things aren't working - so obviously the best move is to install Sentry and figure out why.
+	</Card>
+	<Card title="Why...so...slow?!" icon="down-arrow">
+		Homepage performance is way low; let's use tracing to dive into SSR get it fixed
+	</Card>
+	<Card title="A store that can't checkout" icon="error">
+		If a store doesn't have a functional checkout is it even a store?
+	</Card>
+	<Card title="Error undefined; but maybe not anymore?" icon="warning">
+		Checkouts still broken and we still don't know why - let's teach Sentry to figure out!
+	</Card>
+</CardGrid>
