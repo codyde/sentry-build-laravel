@@ -4,23 +4,23 @@ This repository contains the documentation and guide for the Sentry Build worksh
 
 ## About the Workshop
 
-Sentry Build is a hands-on workshop that teaches developers how to integrate Sentry into Next.js applications. The workshop covers:
+Sentry Build is a hands-on workshop that teaches developers how to integrate Sentry into **Laravel and React** applications using a sample project called "Unborked". The workshop covers:
 
-- Getting started with a Next.js project
-- Installing and configuring Sentry
-- Using Session Replay to understand user interactions
-- Monitoring application performance with custom traces
-- Leveraging AI-powered features to automatically fix bugs
+- Getting started with the Unborked Laravel/React project
+- Installing and configuring Sentry for Laravel
+- Debugging performance issues using Sentry Tracing and the Laravel Framework View
+- Identifying and fixing application errors
+- Understanding core Sentry features like Error Monitoring, Performance Monitoring, and Replays in the context of a full-stack application.
 
 ## Workshop Content
 
-The workshop is divided into five main sections:
+The workshop content, driven by the documentation site, covers modules like:
 
-1. **Code Breaks... So What Now** - Introduction and project setup
-2. **Install Sentry!** - Installation and initial configuration
-3. **Replaying the Problem** - Session Replay functionality
-4. **Tracing Performance** - Performance monitoring and custom spans
-5. **AI Autofix Robots Arrive** - AI-powered error fixing capabilities
+1.  **Code Breaks... So What Now** - Introduction to the "Unborked" application.
+2.  **Install Sentry!** - Installation and initial Sentry configuration for Laravel.
+3.  **Why...so...slow?!** - Using Sentry Tracing to debug backend performance issues.
+4.  **A store that can't checkout** - Investigating and fixing frontend/backend errors affecting functionality.
+5.  **Error undefined; but maybe not anymore?** - Further debugging techniques with Sentry.
 
 ## Running the Documentation Locally
 
@@ -33,8 +33,8 @@ The workshop is divided into five main sections:
 
 ```bash
 # Clone the repository
-git clone https://github.com/getsentry/sentry-build-workshop.git
-cd sentry-build-workshop
+git clone https://github.com/getsentry/sentry-build-laravel.git
+cd sentry-build-laravel
 
 # Install dependencies
 npm install
@@ -64,5 +64,6 @@ If you'd like to contribute to this workshop, feel free to open a pull request o
 ## Resources
 
 - [Sentry Documentation](https://docs.sentry.io/)
-- [Next.js SDK Documentation](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
+- [Laravel SDK Documentation](https://docs.sentry.io/platforms/php/guides/laravel/)
+- [React SDK Documentation](https://docs.sentry.io/platforms/javascript/guides/react/)
 - [Astro Starlight Documentation](https://starlight.astro.build/)
