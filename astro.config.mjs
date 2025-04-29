@@ -43,8 +43,8 @@ export default defineConfig({
                   slug: 'debugging-issues/issue-2-flaky-add-to-cart-button',
                 },
                 {
-                  label: 'Issue 3: Auth who?',
-                  slug: 'debugging-issues/issue-3-auth-header',
+                  label: "Issue 3: Can't Check Out!!",
+                  slug: 'debugging-issues/issue-3-cant-check-out',
                 },
               ],
             },
