@@ -4,6 +4,7 @@ description: "Debugging performance issues in the marketplace"
 ---
 
 import { Steps } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
 From where we left off, we were viewing our Laravel framework view in Sentry. We can clearly see performance issues on our main route for the application.
 
@@ -15,7 +16,7 @@ If we dive into our route, we can quickly tell that performance is decidedly **n
 
 In this view, we can quickly see that the total load time for our main site in most case exceeds 1.5 seconds; which is pretty atrocious for a site that should be loading up quickly to allow purchases.
 
-## Trace View - Part 1 
+## Using the Traces view
 
 If we dive into any of the transactions, we can see a detailed view of the overall trace, and the spans below it that cover the load time for our application. 
 
@@ -28,26 +29,83 @@ A couple of insights we can immediately notice:
 
 We can instrument custom traces to help us identify where the performance is taking the biggest hit.
 
-## TODO - Start tracing steps
-
 <Steps>
-  1. **Update the import statement**
+  1. **Edit the `app/Http/Controllers/ProductController.php` file with custom instrumentation**
 
-     ```javascript
-     // this is line 4
-     import * as Sentry from '@sentry/nextjs';
+     Replace the content within the `index()` function wiht the following content to instrument the span 
+
+     ```php
+     public function index()
+     {
+        $parent = \Sentry\SentrySDK::getCurrentHub()->getSpan();
+        $span = null;
+
+        if ($parent !== null) {
+            $context = \Sentry\Tracing\SpanContext::make()
+                ->setOp('function')
+                ->setDescription('Fetch products');
+            $span = $parent->startChild($context);
+
+            \Sentry\SentrySDK::getCurrentHub()->setSpan($span);
+        }
+
+        $featuredProducts = Product::select()->where('featured', 1)->get();
+        $allProducts = Product::all();
+
+        $span?->setData([ 'numFeaturedProducts' => count($featuredProducts), 'numAllProducts' => count($allProducts) ]);
+        $span?->finish();
+
+        return Inertia::render('index', [ 'featuredProducts' => $featuredProducts, 'allProducts' => $allProducts ]);
+     }
      ```
 
-  2. **Update the catch block in your code**
+  2. **Reload our applciation**
 
-     ```javascript
-     } catch (error) {
-         console.error('Error in products API route:', error);
+     Because we're running in SSR mode, we'll need to rebuild our application. Cancel your running process, and re-run the startup command:
 
-         // SENTRY-THIS: Cathing your exceptions!
-         Sentry.captureException(error);
-
-         return NextResponse.json(
+     ```bash
+     composer run dev:ssr
      ```
+
+     Reload the application, and with the code we instrumented above, we should start seeing the new trace information. 
+
+  3. **Explore the trace information**
+
+     - Head to "Explore" on the left navigation and select "Traces" from the list. 
+     - Ensure you have your Laravel project selected in the project dropdown. 
+     - In the search box, type `span.op` and select the span.op option from the list below. For the field that displays next, type in "function" and press enter
+
+     ![Laravel Trace View](/../../assets/img/TraceExplorerSearch.png)
+
+     <Aside>
+     But wait, where did we get that name from? In the code we copied above, you might have noticed this line - 
+
+     ```php
+     $context = \Sentry\Tracing\SpanContext::make()
+          ->setOp('function')
+          ->setDescription('Fetch products');
+     $span = $parent->startChild($context);
+     ```
+
+     Here we name it "function" and give it a description of "Fetch products"
+     </Aside>
+
+  4. **Explore the trace information**
+
+     Select one of the traces from the list, and you'll be moved into the trace explorer where you can view the path that communication took throughout this trace. The individual actions are referred to as spans. 
+
+     ![Laravel Traces](/../../assets/img/SpanView.png)
+
+  5. **Understanding our Issue**
+  
+     Looking at our trace, we can see that while the load time for this specific function is relatively low latency wise - we're returning 3000 products to the main page; far more than actually needed.
+
+     We can correct this by simply reducing the amount of products we're returning to the main page, and implementing a level of pagination for the items.
+
 </Steps>
+
+
+Traces are a great way to bring additional context into the communication flows within your application. In this case, our issue wasn't throwing an error, but we were able to add additional span properties to our item that help us understand exactly whats happening in the application.
+
+But now, as we start adding items to the cart, we see a different issue. Let's head into issue 2 to find out what's broken.
 

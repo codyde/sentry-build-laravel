@@ -7,9 +7,17 @@ So we've got Sentry installed now; great. Let's get to exploring what's going on
 
 ## Houston, We Have Several Problems
 
-Picture this: You visit Unborked's marketplace, eager to pick up some sweet swag, and you're waiting... and waiting... and waiting.
+Picture this: You visit Unborked's marketplace, eager to pick up some sweet swag, and you're waiting... and waiting... and waiting. Infact, lets not picture it - lets actually see it! 
 
-Something's clearly wrong but you can't quite put your fingers on what. Fortunately, we've got monitoring for that! 
+To get started, run the following command to start the application:
+
+```bash
+composer run dev:ssr
+```
+
+This will build our applications frontend, spin up the backend, and give us our application running at [http://localhost:8000](http://localhost:8000).
+
+Open it up and lets kick the tires! 
 
 ## Sentry's Laravel Framework View 
 
@@ -28,21 +36,7 @@ This framework view gives you performance insights into
 - Cache misses 
 - And per route performance
 
-If we dive into our route, we can quickly tell that performance is decidedly **not good**.
+We'll be using this view to help us identify where the performance is going down.
 
-![Laravel Route Performance](/../../assets/img/LaravelRoutePerformance.png)
+Enough talking about it; lets get into Unborking this.
 
-In this view, we can quickly see that the total load time for our main site in most case exceeds 1.5 seconds; which is pretty atrocious for a site that should be loading up quickly to allow purchases.
-
-## Trace View - Part 1 
-
-If we dive into any of the transactions, we can see a detailed view of the overall trace, and the spans below it that cover the load time for our application. 
-
-![Laravel Trace View](/../../assets/img/LaravelExampleTraceView.png)
-
-A couple of insights we can immediately notice:
-- These traces are 80% slower than the average
-- The majority of time is coming from a /render call thats being made 
-- Our database queries are fast in comparison; so its a different aspect of loading thats slowing us down 
-
-We can instrument custom traces to help us identify where the performance is going down.

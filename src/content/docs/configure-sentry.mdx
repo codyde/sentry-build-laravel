@@ -9,6 +9,59 @@ Let's face it—your code is going to break. It happens to all of us. The questi
 
 ## Setting Up Sentry
 
+Our application features a React based frontend running in Laravel thanks to InertiaJS. We'll need to instrument Sentry in both our frontend and backend, and then we can create a view in Sentry that will let us view issues across the projects. 
+
+### Frontend Setup
+
+<Steps>
+
+  1. **Create your React Frontend Project** 
+
+     - Go to [Sentry.io](https://sentry.io) and create a new project
+     - Select "React" as the platform
+     - Choose "Error Monitoring", "Tracing", and "Session Replay"
+
+     ![Sentry Project creation](../../../public/assets/img/ReactFrontendProject.png)
+
+  2. **Install the React SDK**
+
+     The on screen instructions from the project will guide you through what to do next, but for completeness, we're including the steps here. We'll need to install the Sentry React SDK and add the Sentry initialization code to our app. To start, run the installation command from the root directory of the project 
+
+     ```bash
+     npm install --save @sentry/react
+     ```
+
+     ![Sentry React SDK](../../../public/assets/img/FrontendInit.png)
+
+  3. **Initialize Sentry in your React Frontend Application**
+
+     Navigate to the `resources/js/app.tsx` file and add the Sentry initialization code to the top of the file. 
+
+     ```typescript
+     import * as Sentry from "@sentry/react";
+
+     Sentry.init({
+        dsn: "https://5e7c8b1f16533acb2e66fef81b58efbe@o4508130833793024.ingest.us.sentry.io/4509240735629312",
+        // Setting this option to true will send default PII data to Sentry.
+        // For example, automatic IP address collection on events
+        sendDefaultPii: true,
+        integrations: [
+           Sentry.browserTracingIntegration(),
+           Sentry.replayIntegration()
+        ],
+      // Tracing
+        tracesSampleRate: 1.0, //  Capture 100% of the transactions
+      // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
+        tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
+      // Session Replay
+        replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
+        replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when   sampling sessions where errors occur.
+     });
+     ```
+</Steps>
+
+### Backend Setup
+
 <Steps>
 
   1. **Create your Sentry Project**
@@ -17,7 +70,7 @@ Let's face it—your code is going to break. It happens to all of us. The questi
      - Select "Laravel" as the platform
      - Choose "Error Monitoring", "Tracing", and "Profiling"
 
-     ![Sentry Project creation](../../../public/assets/img/LaravelProject.gif)
+     ![Sentry Project creation](../../../public/assets/img/ProjectCreateLaravel.png)
 
      Take note of your DSN! You'll need it soon!
 
@@ -125,9 +178,9 @@ This is essential for quickly identifying and fixing critical issues before they
 </details>
 
 <details>
-<summary>Learn More: Performance Monitoring</summary>
+<summary>Learn More: Tracing</summary>
 
-Performance monitoring helps you track how your application performs for real users:
+Tracing helps you track how your application performs for real users:
 
 - Track page load times
 - Monitor API call durations
@@ -135,7 +188,7 @@ Performance monitoring helps you track how your application performs for real us
 - See frontend rendering performance
 - Set performance thresholds and alerts
 
-Sentry's performance monitoring creates "transactions" for each significant operation in your app. Each transaction contains "spans" representing smaller operations within it.
+Sentry's performance monitoring creates "traces" for each significant operation in your app. Each trace contains "spans" representing smaller operations within it.
 
 This allows you to:
 - See which parts of your application are running slowly
