@@ -56,8 +56,8 @@ export default defineConfig({
           items: [
             { label: 'Sentry Documentation', link: 'https://docs.sentry.io/' },
             {
-              label: 'Next.js SDK',
-              link: 'https://docs.sentry.io/platforms/javascript/guides/nextjs/',
+              label: 'Laravel SDK',
+              link: 'https://docs.sentry.io/platforms/php/guides/laravel/',
             },
           ],
         },
@@ -67,6 +67,7 @@ export default defineConfig({
 
   // Configure Vercel adapter with specific options for assets
   adapter: vercel({
+    imageService: true,
     includeFiles: [
       './src/assets/**/*',
       './src/assets/img/**/*',
