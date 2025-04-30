@@ -3,44 +3,42 @@ title: Code Breaks... So What Now
 description: Get started with the workshop project
 ---
 
-Welcome to debugging hell! Wait, I mean... welcome to our hands-on workshop. We've got a "slightly broken" application called Unborked—a revolutionary marketplace where developers can buy things that ultimately they can get cheaper off of other sides; but they buy from us beacuse of "brand loyalty". Unfortunately, Unborked itself is experiencing a collection of fascinating bugs, from performance issues to checkout problems to mysterious transaction failures.
+Welcome to our hands-on workshop! We've got an ecommerce application called Unborked — a revolutionary marketplace where developers can buy things. Unfortunately, Unborked is experiencing some interesting issues that we'll help you debug using Sentry.
 
-But don't worry—by the end of this workshop, you'll be fixing errors like a pro, or at least getting into a place where you can hide them really well.
-
-## Meet Unborked: The Buggiest Error Marketplace Ever
+## Meet Unborked: The Marketplace with Issues
 
 Unborked is built with Laravel and React and includes:
 
-- User authentication (when it works)
-- Product listings to help you buy the cheapest things (sometimes)
-- API endpoints that occasionally decide to take a vacation
-- A database connection that's having an existential crisis
-- Performance issues that would make a sloth look speedy
+- A product marketplace with performance issues
+- An Add to Cart button that sometimes works and sometimes doesn't
+- A checkout process that fails under certain conditions
+- Real-world debugging scenarios that you'll encounter in production
 
-These aren't bugs—they're learning opportunities! And we're going to catch every single one.
+These aren't just bugs—they're real-world scenarios that we'll help you debug using Sentry's powerful tools!
 
-### Running Locally 
+### Running Locally
 
-In the quickstart we made sure we ran the project, but just in case you skipped - make sure you've started it with... 
+In the quickstart we made sure we ran the project, but just in case you skipped - make sure you've started it with...
 
 ```bash
-npm run build 
+npm run build
 composer run dev:ssr
 ```
 
 Once complete, this should have you up and running on [http://localhost:8000](http://localhost:8000).
 
+## The Issues We'll Debug
 
-## Is It Working? (Define "Working")
+Now that you've got Unborked running, let's explore the issues we'll be debugging:
 
-Now that you've got Unborked running (sort of), take a moment to click around and experience our carefully crafted chaos:
+1. **Performance Issues**: The marketplace is running slower than expected, with page loads taking over 1.5 seconds. We'll use Sentry's performance monitoring to identify and fix the bottlenecks.
 
-1. Things are pretttttty slow on the massive product page at the landing 
-2. The checkout functionality has chacked out... like... it doesn't work
-3. 
+2. **Flaky Add to Cart**: The Add to Cart button sometimes works and sometimes doesn't, with cryptic error messages in production. We'll learn how to add proper error context and fix the underlying issues.
+
+3. **Checkout Problems**: The checkout process fails under certain conditions. We'll use Sentry's Seer AI, Session Replay, and Breadcrumbs to understand and fix these complex issues.
 
 ## Next Steps
 
-Now that we've got our gloriously broken application up and running, it's time to add some error monitoring, and a lot of tracing! 
+Now that we've got our application up and running and understand the issues we'll be tackling, it's time to add Sentry to start catching these errors and figuring out what's actually going wrong.
 
-In the [next section](/configure-sentry/), we'll install Sentry to start catching these errors and figuring out what's actually going wrong. 
+In the [next section](/configure-sentry/), we'll install Sentry to start catching these errors and figuring out what's actually going wrong.
